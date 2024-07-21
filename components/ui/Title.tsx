@@ -1,12 +1,13 @@
 import Link from "next/link";
 import Image from "next/image";
+import title from "@/public/resources/img/piggieslogo_5.png";
 
 export default function Title() {
   return (
     <div className="flex justify-center">
       <Link href={"/"}>
         <Image
-          src="/resources/img/piggiesLogo_5.png"
+          src={title}
           width={400}
           height={400}
           alt="piggiesLogo"
