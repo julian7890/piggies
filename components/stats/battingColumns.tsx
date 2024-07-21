@@ -41,10 +41,6 @@ export const columns: ColumnDef<Player>[] = [
     header: "AB",
   },
   {
-    accessorKey: "runs",
-    header: "R",
-  },
-  {
     accessorKey: "hits",
     header: "H",
     accessorFn: (row) => row.single + row.double + row.triple + row.homerun,
@@ -73,6 +69,10 @@ export const columns: ColumnDef<Player>[] = [
   {
     accessorKey: "RBI",
     header: "RBI",
+  },
+  {
+    accessorKey: "runs",
+    header: "R",
   },
   {
     accessorKey: "walks",

@@ -12,7 +12,7 @@ export default function Home() {
         <Recent />
         <NextGame />
       </div>
-      <div className="flex flex-col gap-8">
+      <div className="flex flex-col gap-8 py-10">
         <BattingStats />
         <PitchingStats />
       </div>

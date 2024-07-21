@@ -160,7 +160,7 @@ export function DataTable<TData, TValue>({
                         variant="ghost"
                         className={`${
                           header.column.getIsSorted() ? "bg-accent" : ""
-                        } md:text-xl`}
+                        } md:text-xl px-2 md:px-4`}
                         onClick={() => header.column.toggleSorting()}
                       >
                         {header.isPlaceholder

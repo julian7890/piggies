@@ -65,7 +65,7 @@ export default async function BattingStats() {
   const data = await getData();
 
   return (
-    <div className="container md:max-w-full mx-auto px-20 md:text-2xl">
+    <div className="container md:max-w-full mx-auto md:px-20 md:text-2xl">
       <div className="flex justify-center">Batting Stats</div>
       <DataTable
         columns={columns}
