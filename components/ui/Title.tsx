@@ -6,7 +6,7 @@ export default function Title() {
     <div className="flex justify-center">
       <Link href={"/"}>
         <Image
-          src={"/resources/pic/piggiesLogo_5.png"}
+          src="/resources/img/piggiesLogo_5.png"
           width={400}
           height={400}
           alt="piggiesLogo"
