@@ -70,7 +70,7 @@ export const columns: ColumnDef<Player>[] = [
   },
   {
     accessorKey: "homerun",
-    header: "H",
+    header: "HR",
   },
   {
     accessorKey: "hitBatsmen",

@@ -29,9 +29,9 @@ const runsCalc = (scoreData: (number | null)[]) => {
 
 export default function Recent() {
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center pt-4">
       <div>
-        <Table className="text-md md:text-2xl">
+        <Table className="text-md md:text-2xl scale-90 sm:scale-100">
           <TableCaption>Result 7/14/2024</TableCaption>
           <TableBody>
             <TableRow>
