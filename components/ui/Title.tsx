@@ -12,7 +12,7 @@ export default function Title() {
           height={700}
           alt="piggiesLogo"
           priority
-          className="w-96 md:w-[700px] h-auto p-4"
+          className="w-96 md:w-[600px] h-auto p-4"
         />
       </Link>
     </div>

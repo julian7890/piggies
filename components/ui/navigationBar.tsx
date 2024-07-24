@@ -48,6 +48,7 @@ export default function NavigationBar() {
               alt="logo"
               className="h-auto w-auto object-contain"
               sizes="auto"
+              priority
             />
           </motion.div>
         ) : (
@@ -56,7 +57,7 @@ export default function NavigationBar() {
       </AnimatePresence>
       <Link
         href={"/"}
-        className={`rounded-xl p-4  hover:bg-[#212E41]/60 ${
+        className={`rounded-xl p-2 md:p-4 hover:bg-[#212E41]/60 ${
           pathname == "/"
             ? "bg-[#212E41] pointer-events-none select-none"
             : "bg-[#212E41]/80"
@@ -66,7 +67,7 @@ export default function NavigationBar() {
       </Link>
       <Link
         href={"/submit"}
-        className={`rounded-xl p-4  hover:bg-[#212E41]/60 ${
+        className={`rounded-xl p-2 md:p-4 hover:bg-[#212E41]/60 ${
           pathname == "/submit"
             ? "bg-[#212E41] pointer-events-none select-none"
             : "bg-[#212E41]/80"
