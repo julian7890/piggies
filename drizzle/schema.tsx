@@ -7,6 +7,7 @@ import {
   unique,
   uuid,
   varchar,
+  time,
 } from "drizzle-orm/pg-core";
 
 export const PlayerTable = pgTable(
@@ -32,12 +33,30 @@ export const StatTable = pgTable("stat", {
   playerId: uuid("playerId")
     .references(() => PlayerTable.id)
     .notNull(),
+  ["1st"]: varchar("1st", { length: 255 }),
+  ["2nd"]: varchar("2nd", { length: 255 }),
+  ["3rd"]: varchar("3rd", { length: 255 }),
+  ["4th"]: varchar("4th", { length: 255 }),
+  ["5th"]: varchar("5th", { length: 255 }),
+  runs: integer("runs"),
+  RBI: integer("RBI"),
+  SB: integer("SB"),
+  IPthird: integer("IPthird"),
+  SO: integer("SO"),
+  hitsAllowed: integer("hitsAllowed"),
+  runsAllowed: integer("runsAllowed"),
+  earnedRunsAllowed: integer("earnedRunsAllowed"),
+  homerunAllowed: integer("homerunAllowed"),
+  HB: integer("HB"),
+  walksAllowed: integer("walksAllowed"),
+  pitcherRecord: varchar("pitcherRecord", { length: 255 }),
 });
 
 export const GameTable = pgTable("game", {
   id: uuid("id").primaryKey().defaultRandom(),
   gameDate: date("gameDate"),
-  playerId: uuid("playerId").references(() => PlayerTable.id),
+  field: varchar("field", { length: 255 }),
+  gameTime: time("gameTime"),
 });
 
 export const GameStatTable = pgTable(

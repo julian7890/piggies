@@ -15,6 +15,20 @@
       "when": 1721783714295,
       "tag": "0001_solid_black_knight",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1721835003079,
+      "tag": "0002_foamy_betty_ross",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1721844471664,
+      "tag": "0003_first_captain_america",
+      "breakpoints": true
     }
   ]
 }
