@@ -29,6 +29,48 @@
       "when": 1721844471664,
       "tag": "0003_first_captain_america",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1721863112804,
+      "tag": "0004_outgoing_guardian",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1721877239636,
+      "tag": "0005_brief_rattler",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1721877313943,
+      "tag": "0006_naive_spirit",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1721880227819,
+      "tag": "0007_salty_exiles",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1721934002910,
+      "tag": "0008_charming_moon_knight",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1721934105627,
+      "tag": "0009_luxuriant_morlun",
+      "breakpoints": true
     }
   ]
 }

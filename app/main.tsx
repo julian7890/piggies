@@ -1,18 +1,41 @@
 import { db } from "../drizzle/db";
 import { PlayerTable, GameTable } from "../drizzle/schema";
 import { format } from "date-fns";
+import { toZonedTime } from "date-fns-tz";
 
 async function main() {
-  const dateTime = new Date(2024, 6, 21, 7);
-  const date = format(dateTime, "PP");
-  const time = format(dateTime, "p");
+  const dateTime = toZonedTime(new Date(2024, 6, 28, 7), "America/New_York");
+
+  const entry = (
+    year: number,
+    month: number,
+    day: number,
+    hour: number,
+    fieldName: string,
+    opponentName: string
+  ) => {
+    const dateTime = toZonedTime(
+      new Date(year, month, day, hour),
+      "America/New_York"
+    );
+
+    const time = format(dateTime, "p");
+
+    return {
+      gameDate: dateTime,
+      gameTime: time,
+      field: fieldName,
+      opponent: opponentName,
+    };
+  };
+
   await db
     .insert(GameTable)
-    .values({
-      gameDate: date,
-      field: "Central Park Field #3",
-      gameTime: time,
-    })
+    .values([
+      entry(2024, 6, 28, 7, "Randall's Island Field #48", "NIK"),
+      entry(2024, 6, 21, 8, "Central Park Field #3", "KZR"),
+      entry(2024, 6, 14, 9, "Randall's Island Field #41", "B&B"),
+    ])
     .returning({
       id: GameTable.id,
     });

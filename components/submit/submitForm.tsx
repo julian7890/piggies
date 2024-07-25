@@ -102,23 +102,55 @@ export default function SubmitForm({ playerList }: Props) {
   const [isSubmitSuccessful, setIsSubmitSuccessful] = useState(false);
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const res = await fetch("/api/stat", {
-      method: "POST",
-      body: JSON.stringify(values),
-    });
-    if (res) {
-      setIsSubmitSuccessful(true);
-      toast({
-        title: `Stats for ${format(values.date, "PP")} has been submitted!`,
-        description: (
-          <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-            <div className="text-white">
-              <div>Submission Success!</div>
-              <div>Thank you {values.player}!</div>
-            </div>
-          </pre>
-        ),
+    try {
+      const res = await fetch("/api/stat", {
+        method: "POST",
+        body: JSON.stringify(values),
       });
+
+      const response = await res.json();
+
+      if (!res.ok) {
+        toast({
+          title: `Submission Failed`,
+          description: (
+            <pre className="mt-2 rounded-md bg-slate-950 p-4">
+              <div className="text-white">
+                <div>Please try again</div>
+              </div>
+            </pre>
+          ),
+        });
+      } else {
+        if (response.status == "error") {
+          toast({
+            variant: "destructive",
+            title: `Submission Failed`,
+            description: (
+              <pre className="mt-2 rounded-md bg-slate-950 p-4">
+                <div className="text-white">
+                  <div className="text-wrap">{response.message}</div>
+                </div>
+              </pre>
+            ),
+          });
+          return;
+        }
+        setIsSubmitSuccessful(true);
+        toast({
+          title: `Stats for ${format(values.date, "PP")} has been submitted!`,
+          description: (
+            <pre className="mt-2 rounded-md bg-slate-950 p-4">
+              <div className="text-white">
+                <div>Submission Success!</div>
+                <div>Thank you {values.player}!</div>
+              </div>
+            </pre>
+          ),
+        });
+      }
+    } catch (error) {
+      console.log(error);
     }
   }
 

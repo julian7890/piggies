@@ -1,0 +1,1 @@
+ALTER TABLE "game" ALTER COLUMN "gameDate" SET DATA TYPE timestamp with time zone;

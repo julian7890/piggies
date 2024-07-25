@@ -1,6 +1,5 @@
 import { relations } from "drizzle-orm";
 import {
-  date,
   integer,
   pgTable,
   primaryKey,
@@ -8,6 +7,7 @@ import {
   uuid,
   varchar,
   time,
+  timestamp,
 } from "drizzle-orm/pg-core";
 
 export const PlayerTable = pgTable(
@@ -29,7 +29,9 @@ export const PlayerTable = pgTable(
 
 export const StatTable = pgTable("stat", {
   id: uuid("id").primaryKey().defaultRandom(),
-  gameId: uuid("statsId").references(() => GameTable.id),
+  gameId: uuid("gameId")
+    .references(() => GameTable.id)
+    .notNull(),
   playerId: uuid("playerId")
     .references(() => PlayerTable.id)
     .notNull(),
@@ -54,9 +56,10 @@ export const StatTable = pgTable("stat", {
 
 export const GameTable = pgTable("game", {
   id: uuid("id").primaryKey().defaultRandom(),
-  gameDate: date("gameDate"),
-  field: varchar("field", { length: 255 }),
+  gameDate: timestamp("gameDate", { mode: "date" }),
   gameTime: time("gameTime"),
+  field: varchar("field", { length: 255 }),
+  opponent: varchar("opponent", { length: 255 }),
 });
 
 export const GameStatTable = pgTable(
