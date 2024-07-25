@@ -12,7 +12,10 @@ async function main() {
     day: number,
     hour: number,
     fieldName: string,
-    opponentName: string
+    opponentName: string,
+    homeTeam?: boolean,
+    selfResult?: string,
+    opponentResult?: string,
   ) => {
     const dateTime = toZonedTime(
       new Date(year, month, day, hour),
@@ -26,6 +29,9 @@ async function main() {
       gameTime: time,
       field: fieldName,
       opponent: opponentName,
+      selfResult: selfResult,
+      opponentResult: opponentResult,
+      homeTeam: homeTeam
     };
   };
 
@@ -33,8 +39,18 @@ async function main() {
     .insert(GameTable)
     .values([
       entry(2024, 6, 28, 7, "Randall's Island Field #48", "NIK"),
-      entry(2024, 6, 21, 8, "Central Park Field #3", "KZR"),
-      entry(2024, 6, 14, 9, "Randall's Island Field #41", "B&B"),
+      entry(2024, 6, 21, 8, "Central Park Field #3", "KZR",true, "000100", "012004"),
+      entry(
+        2024,
+        6,
+        14,
+        9,
+        "Randall's Island Field #41",
+        "B&B",
+        true,
+        "02014",
+        "101000"
+      ),
     ])
     .returning({
       id: GameTable.id,

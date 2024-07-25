@@ -8,6 +8,7 @@ import {
   varchar,
   time,
   timestamp,
+  boolean,
 } from "drizzle-orm/pg-core";
 
 export const PlayerTable = pgTable(
@@ -60,6 +61,9 @@ export const GameTable = pgTable("game", {
   gameTime: time("gameTime"),
   field: varchar("field", { length: 255 }),
   opponent: varchar("opponent", { length: 255 }),
+  selfResult: varchar("selfResult", { length: 255 }),
+  opponentResult: varchar("opponentResult", { length: 255 }),
+  homeTeam: boolean("homeTeam"),
 });
 
 export const GameStatTable = pgTable(

@@ -8,10 +8,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-const data = {
-  team1: { name: "B&B", scoreData: [1, 0, 1, 0, 0, 0, null] },
-  team2: { name: "PIG", scoreData: [0, 2, 0, 1, 4, null, null] },
-};
+import { format } from "date-fns";
 
 const scoreTable = (scoreData: (number | null)[]) => {
   return scoreData.map((score, index) => (
@@ -22,17 +19,43 @@ const scoreTable = (scoreData: (number | null)[]) => {
 const runsCalc = (scoreData: (number | null)[]) => {
   let result = 0;
   for (let score of scoreData) {
-    result += score || 0;
+    result += Number(score) || 0;
   }
   return result;
 };
 
-export default function Recent() {
+export default function Recent({ previousGame }: any) {
+  const previousGameDate = format(previousGame.gameDate, "P");
+  const formatScore = (scoreData: string) => {
+    const arr: (number | null)[] = scoreData.split("").map((n) => +n);
+    for (let i = 0; i <= 7 - arr.length; i++) {
+      arr.push(null);
+    }
+    return arr;
+  };
+
+  const piggiesData = {
+    name: "PIG",
+    scoreData: formatScore(previousGame.selfResult),
+  };
+  const opponentData = {
+    name: previousGame.opponent,
+    scoreData: formatScore(previousGame.opponentResult),
+  };
+
+  const data = {
+    visitor: previousGame.homeTeam ? opponentData : piggiesData,
+    home: previousGame.homeTeam ? piggiesData : opponentData,
+  };
+
+  const homeTotal = runsCalc(data.home.scoreData);
+  const visitorTotal = runsCalc(data.visitor.scoreData);
+
   return (
     <div className="flex justify-center pt-4">
       <div>
         <Table className="text-md md:text-2xl scale-90 sm:scale-100">
-          <TableCaption>Result 7/14/2024</TableCaption>
+          <TableCaption>Result {previousGameDate}</TableCaption>
           <TableBody>
             <TableRow>
               <TableHead></TableHead>
@@ -46,17 +69,25 @@ export default function Recent() {
               <TableHead className="text-white border">R</TableHead>
             </TableRow>
             <TableRow>
-              <TableCell>{data.team1.name}</TableCell>
-              {scoreTable(data.team1.scoreData)}
-              <TableCell className="border">
-                {runsCalc(data.team1.scoreData)}
+              <TableCell>{data.visitor.name}</TableCell>
+              {scoreTable(data.visitor.scoreData)}
+              <TableCell
+                className={`${
+                  visitorTotal > homeTotal ? "font-bold" : ""
+                } border`}
+              >
+                {visitorTotal}
               </TableCell>
             </TableRow>
             <TableRow>
-              <TableCell>{data.team2.name}</TableCell>
-              {scoreTable(data.team2.scoreData)}
-              <TableCell className="font-bold border">
-                {runsCalc(data.team2.scoreData)}
+              <TableCell>{data.home.name}</TableCell>
+              {scoreTable(data.home.scoreData)}
+              <TableCell
+                className={`${
+                  homeTotal > visitorTotal ? "font-bold" : ""
+                } border`}
+              >
+                {homeTotal}
               </TableCell>
             </TableRow>
           </TableBody>
