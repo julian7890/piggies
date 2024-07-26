@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { format, sub } from "date-fns";
+import { toZonedTime } from "date-fns-tz";
 
 type Props = {
   nextGame: {
@@ -13,12 +14,10 @@ type Props = {
 };
 
 export default function NextGame({ nextGame }: Props) {
-  const nextDate = nextGame.gameDate;
+  const nextDate = toZonedTime(nextGame.gameDate as Date, "America/New_York");
   const dayOfWeek = format(nextDate as Date, "ccc");
   const gameTime = format(nextGame.gameDate as Date, "haaa");
   const meetTime = format(sub(nextGame.gameDate as Date, { hours: 1 }), "haaa");
-  console.log(nextGame);
-  console.log(gameTime);
   return (
     <div className="flex flex-col text-xl md:text-2xl p-4 min-w-max">
       <div className="flex justify-center bg-[#39737C]">Next Game</div>
