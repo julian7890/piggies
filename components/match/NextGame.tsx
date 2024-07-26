@@ -20,6 +20,7 @@ export default function NextGame({ nextGame }: Props) {
   const meetTime = format(sub(nextGame.gameDate as Date, { hours: 1 }), "haaa");
   return (
     <div className="flex flex-col text-xl md:text-2xl p-4 min-w-max">
+      <div>{nextDate.toString()}</div>
       <div className="flex justify-center bg-[#39737C]">Next Game</div>
 
       <div className="border-b-2 border-white/70 py-3">
