@@ -16,11 +16,10 @@ type Props = {
 export default function NextGame({ nextGame }: Props) {
   const nextDate = toZonedTime(nextGame.gameDate as Date, "America/New_York");
   const dayOfWeek = format(nextDate as Date, "ccc");
-  const gameTime = format(nextGame.gameDate as Date, "haaa");
-  const meetTime = format(sub(nextGame.gameDate as Date, { hours: 1 }), "haaa");
+  const gameTime = format(nextDate as Date, "haaa");
+  const meetTime = format(sub(nextDate as Date, { hours: 1 }), "haaa");
   return (
     <div className="flex flex-col text-xl md:text-2xl p-4 min-w-max">
-      <div>{nextDate.toString()}</div>
       <div className="flex justify-center bg-[#39737C]">Next Game</div>
 
       <div className="border-b-2 border-white/70 py-3">
