@@ -62,6 +62,7 @@ const formSchema = z.object({
 
 type Props = {
   playerList: PlayerData[];
+  gameDates: string[];
 };
 
 type PlayerData = {
@@ -90,7 +91,9 @@ const defaultValues = {
   pitcherRecord: "",
 };
 
-export default function SubmitForm({ playerList }: Props) {
+export default function SubmitForm({ playerList, gameDates }: Props) {
+  console.log(gameDates.includes("07/21/2024"));
+  console.log(gameDates);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues,
@@ -171,13 +174,13 @@ export default function SubmitForm({ playerList }: Props) {
     "BB",
     "HBP",
     "K",
-    "GO",
-    "FO",
+    "GO / FO",
+    "SF",
   ];
 
   const resultRadio = (valueInput: any, field: any) => {
     const onBase = ["1B", "2B", "3B", "HR", "BB", "HBP"];
-    const outs = ["K", "GO", "FO"];
+    const outs = ["K", "GO / FO", "SF"];
     return (
       <Button
         key={field.name + valueInput}
@@ -377,9 +380,13 @@ export default function SubmitForm({ playerList }: Props) {
                         field.onChange(e);
                         setIsCalendarOpen(false);
                       }}
-                      disabled={(date) =>
-                        date > new Date() || date < new Date("1900-01-01")
-                      }
+                      disabled={(date) => {
+                        return (
+                          date > new Date() ||
+                          date < new Date("1900-01-01") ||
+                          !gameDates.includes(format(date, "P"))
+                        );
+                      }}
                       initialFocus
                     />
                   </PopoverContent>
@@ -388,6 +395,10 @@ export default function SubmitForm({ playerList }: Props) {
               </FormItem>
             )}
           />
+          <div className="flex justify-end gap-4 text-xs md:text-sm text-slate-400 pt-4">
+            <div>GO / FO = Ground / Fly Out</div>
+            <div>SF = Sacrifice Fly</div>
+          </div>
           <FormField
             control={form.control}
             name="1st"

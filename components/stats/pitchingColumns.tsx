@@ -55,6 +55,17 @@ export const columns: ColumnDef<Player>[] = [
   {
     accessorKey: "innings",
     header: "IP",
+    accessorFn: (row) => {
+      const whole = Math.floor(row.innings / 3);
+      switch (row.innings % 3) {
+        case 0:
+          return whole;
+        case 1:
+          return whole + "⅓";
+        case 2:
+          return whole + "⅔";
+      }
+    },
   },
   {
     accessorKey: "hits",

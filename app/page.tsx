@@ -6,6 +6,8 @@ import { db } from "@/drizzle/db";
 import { GameTable } from "@/drizzle/schema";
 import { gte, lte, desc } from "drizzle-orm";
 
+export const revalidate = 0;
+
 export default async function Home() {
   const nextGame = await db
     .select()

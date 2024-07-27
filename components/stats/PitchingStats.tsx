@@ -1,61 +1,78 @@
 import { Player, columns } from "@/components/stats/pitchingColumns";
 import { DataTable } from "@/components/ui/data-table";
+import { db } from "@/drizzle/db";
+import { PlayerTable, StatTable } from "@/drizzle/schema";
+import { eq } from "drizzle-orm";
+
+type PlayerData = {
+  id: string;
+  name: string;
+  number: number;
+};
+
+type Indexable = {
+  [key: string]: any;
+};
 
 async function getData(): Promise<Player[]> {
-  // Fetch data from your API here.
-  return [
-    {
-      id: "1",
-      name: "Julian",
-      number: 0,
-      games: 0,
-      wins: 0,
-      loss: 0,
-      saves: 0,
-      innings: 0,
-      hits: 0,
-      runs: 0,
-      earnedRuns: 0,
-      homerun: 0,
-      walks: 0,
-      hitBatsmen: 0,
-      strikeouts: 0,
-    },
-    {
-      id: "2",
-      name: "testPitcher",
-      number: 20,
-      games: 20,
-      wins: 20,
-      loss: 20,
-      saves: 20,
-      innings: 20,
-      hits: 20,
-      runs: 20,
-      earnedRuns: 20,
-      homerun: 20,
-      walks: 20,
-      hitBatsmen: 20,
-      strikeouts: 20,
-    },
-    {
-      id: "3",
-      name: "testPitcher2",
-      number: 40,
-      games: 40,
-      wins: 40,
-      loss: 40,
-      saves: 40,
-      innings: 40,
-      hits: 40,
-      runs: 40,
-      earnedRuns: 40,
-      homerun: 40,
-      walks: 40,
-      hitBatsmen: 40,
-      strikeouts: 40,
-    },
-  ];
+  const playerList = await db.select().from(PlayerTable);
+
+  const getStat = async (player: PlayerData) => {
+    const personalStat = await db
+      .select()
+      .from(StatTable)
+      .where(eq(StatTable.playerId, player.id));
+
+    const playResult = (playType: string) => {
+      let total = 0;
+      for (let stat of personalStat) {
+        total += (stat as Indexable)[playType] || 0;
+      }
+      return total;
+    };
+
+    const pitchResult = (resultType: string) => {
+      let count = 0;
+      for (let stat of personalStat) {
+        stat.pitcherRecord == resultType && count++;
+      }
+      return count;
+    };
+
+    const inningsTotal = () => {
+      let total = 0;
+      for (let stat of personalStat) {
+        total += stat.IPthird || 0;
+      }
+      return total;
+    };
+
+    const finalStat = {
+      id: player.id,
+      name: player.name,
+      number: player.number,
+      games: personalStat.length,
+      wins: pitchResult("wins"),
+      loss: pitchResult("loss"),
+      saves: pitchResult("saves"),
+      innings: inningsTotal(),
+      hits: playResult("hitsAllowed"),
+      runs: playResult("runsAllowed"),
+      earnedRuns: playResult("earnedRunsAllowed"),
+      homerun: playResult("homeRunsAllowed"),
+      walks: playResult("walksAllowed"),
+      hitBatsmen: playResult("HB"),
+      strikeouts: playResult("SO"),
+    };
+
+    return finalStat;
+  };
+
+  const statData = await Promise.all(
+    playerList.map((player) => getStat(player))
+  );
+  const filteredData = statData.filter((stat) => stat.innings !== 0);
+  return filteredData;
 }
 
 export default async function PitchingStats() {
