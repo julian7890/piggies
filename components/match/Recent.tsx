@@ -11,15 +11,19 @@ import {
 import { format } from "date-fns";
 
 const scoreTable = (scoreData: (number | null)[]) => {
-  return scoreData.map((score, index) => (
-    <TableCell key={index}>{score == null ? "x" : score}</TableCell>
-  ));
+  if (scoreData) {
+    return scoreData.map((score, index) => (
+      <TableCell key={index}>{score == null ? "x" : score}</TableCell>
+    ));
+  }
 };
 
 const runsCalc = (scoreData: (number | null)[]) => {
   let result = 0;
-  for (let score of scoreData) {
-    result += Number(score) || 0;
+  if (scoreData) {
+    for (let score of scoreData) {
+      result += Number(score) || 0;
+    }
   }
   return result;
 };
@@ -27,8 +31,8 @@ const runsCalc = (scoreData: (number | null)[]) => {
 export default function Recent({ previousGame }: any) {
   const previousGameDate = format(previousGame.gameDate, "P");
   const formatScore = (scoreData: string) => {
-    const arr: (number | null)[] = scoreData.split("").map((n) => +n);
-    for (let i = 0; i <= 7 - arr.length; i++) {
+    const arr: (number | null)[] = scoreData?.split("").map((n) => +n);
+    for (let i = 0; i <= 7 - arr?.length; i++) {
       arr.push(null);
     }
     return arr;
