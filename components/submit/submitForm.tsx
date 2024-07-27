@@ -92,8 +92,6 @@ const defaultValues = {
 };
 
 export default function SubmitForm({ playerList, gameDates }: Props) {
-  console.log(gameDates.includes("07/21/2024"));
-  console.log(gameDates);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues,
