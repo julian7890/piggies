@@ -126,9 +126,9 @@ export const columns: ColumnDef<Player>[] = [
           row.homerun +
           row.walks +
           row.hitByPitch) /
-          (row.atBat + row.walks + row.hitByPitch + row.sacrificeFlies) /
-          ((row.single + row.double * 2 + row.triple * 3 + row.homerun * 4) /
-            row.atBat) || 0
+          (row.atBat + row.walks + row.hitByPitch + row.sacrificeFlies) +
+          (row.single + row.double * 2 + row.triple * 3 + row.homerun * 4) /
+            row.atBat || 0
       ).toFixed(3),
     sortDescFirst: true,
   },
