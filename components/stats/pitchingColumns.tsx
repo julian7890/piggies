@@ -42,7 +42,8 @@ export const columns: ColumnDef<Player>[] = [
   {
     accessorKey: "ERA",
     header: "ERA",
-    accessorFn: (row) => ((row.earnedRuns * 9) / row.innings || 0).toFixed(2),
+    accessorFn: (row) =>
+      ((row.earnedRuns * 7) / (row.innings / 3) || 0).toFixed(2),
   },
   {
     accessorKey: "games",

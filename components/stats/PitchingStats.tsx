@@ -81,6 +81,9 @@ export default async function PitchingStats() {
   return (
     <div className="container md:max-w-full mx-auto md:px-20 md:text-2xl">
       <div className="flex justify-center">Pitching Stats</div>
+      <div className="text-sm text-muted-foreground flex">
+        <div>ERA adjusted to 7 innings per game</div>
+      </div>
       <DataTable
         columns={columns}
         data={data}
