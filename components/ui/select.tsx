@@ -13,9 +13,49 @@ const SelectContext = React.createContext<
 
 const Select: React.FC<SelectPrimitive.SelectProps> = (props) => {
   const [isOpen, setIsOpen] = React.useState(false);
+  const handleOpen = () => {
+    setTimeout(() => {
+      setIsOpen(!isOpen);
+    }, 1000);
+  };
   return (
-    <SelectContext.Provider value={setIsOpen}>
-      <SelectPrimitive.Root open={isOpen} onOpenChange={setIsOpen} {...props} />
+    <SelectContext.Provider value={handleOpen}>
+      <SelectPrimitive.Root
+        open={isOpen}
+        onOpenChange={handleOpen}
+        {...props}
+      />
+    </SelectContext.Provider>
+  );
+};
+
+const DelayedSelect: React.FC<React.PropsWithChildren<any>> = ({
+  children,
+  ...props
+}) => {
+  const [delayedOpen, setDelayedOpen] = useState(false);
+
+  const handleOpenChange = (
+    newOpenState: boolean | ((prevState: boolean) => boolean)
+  ) => {
+    if (newOpenState) {
+      setDelayedOpen(newOpenState);
+    } else {
+      setTimeout(() => {
+        setDelayedOpen(newOpenState);
+      }, 100);
+    }
+  };
+
+  return (
+    <SelectContext.Provider value={handleOpenChange}>
+      <SelectPrimitive.Root
+        open={delayedOpen}
+        onOpenChange={handleOpenChange}
+        {...props}
+      >
+        {children}
+      </SelectPrimitive.Root>
     </SelectContext.Provider>
   );
 };
@@ -96,35 +136,19 @@ const SelectContent = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Content>
 >(({ className, children, position = "popper", ...props }, ref) => {
-  const [isMouseDown, setIsMouseDown] = useState(false);
-
-  const handleDrag = (e: any, ref: any) => {
-    if (!isMouseDown || !ref.current) return;
-    e.preventDefault();
-  };
-
-  const handleDragStart = (e: any, ref: any) => {
-    if (!ref.current) return;
-    setIsMouseDown(true);
-  };
-
-  const handleDragEnd = (e: any, ref: any) => {
-    setIsMouseDown(false);
-    if (!ref.current) return;
-  };
-
   return (
     <SelectPrimitive.Portal>
       <SelectPrimitive.Content
-        ref={(ref) => {
-          if (!ref) return;
-          ref.ontouchend = (e) => e.preventDefault();
-          ref.onpointerdown = (e) => handleDragStart(e, ref);
-          ref.onmousemove = (e) => handleDrag(e, ref);
-          ref.onmousedown = (e) => handleDragStart(e, ref);
-          ref.onmouseup = (e) => handleDragEnd(e, ref);
-          ref.onpointermove = (e) => handleDrag(e, ref);
-        }}
+        ref={ref}
+        // ref={(ref) => {
+        //   if (!ref) return;
+        //   ref.ontouchend = (e) => e.preventDefault();
+        //   ref.onpointerdown = (e) => handleDragStart(e, ref);
+        //   ref.onmousemove = (e) => handleDrag(e, ref);
+        //   ref.onmousedown = (e) => handleDragStart(e, ref);
+        //   ref.onmouseup = (e) => handleDragEnd(e, ref);
+        //   ref.onpointermove = (e) => handleDrag(e, ref);
+        // }}
         className={cn(
           "relative z-50 max-h-96 min-w-[8rem] overflow-hidden rounded-md border bg-popover text-popover-foreground shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
           position === "popper" &&
@@ -200,6 +224,7 @@ SelectSeparator.displayName = SelectPrimitive.Separator.displayName;
 
 export {
   Select,
+  DelayedSelect,
   SelectGroup,
   SelectValue,
   SelectTrigger,

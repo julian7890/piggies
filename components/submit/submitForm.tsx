@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/form";
 
 import {
+  DelayedSelect,
   Select,
   SelectContent,
   SelectItem,
@@ -316,7 +317,7 @@ export default function SubmitForm({ playerList, gameDates }: Props) {
               <FormItem>
                 <FormLabel className="md:text-2xl">Player</FormLabel>
                 <FormControl>
-                  <Select
+                  <DelayedSelect
                     onValueChange={field.onChange}
                     defaultValue={field.value}
                     value={field.value}
@@ -337,7 +338,7 @@ export default function SubmitForm({ playerList, gameDates }: Props) {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>{playerSelection()}</SelectContent>
-                  </Select>
+                  </DelayedSelect>
                 </FormControl>
                 <FormMessage />
               </FormItem>
