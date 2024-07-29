@@ -13,18 +13,9 @@ const SelectContext = React.createContext<
 
 const Select: React.FC<SelectPrimitive.SelectProps> = (props) => {
   const [isOpen, setIsOpen] = React.useState(false);
-  const handleOpen = () => {
-    setTimeout(() => {
-      setIsOpen(!isOpen);
-    }, 1000);
-  };
   return (
-    <SelectContext.Provider value={handleOpen}>
-      <SelectPrimitive.Root
-        open={isOpen}
-        onOpenChange={handleOpen}
-        {...props}
-      />
+    <SelectContext.Provider value={setIsOpen}>
+      <SelectPrimitive.Root open={isOpen} onOpenChange={setIsOpen} {...props} />
     </SelectContext.Provider>
   );
 };
