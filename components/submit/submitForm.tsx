@@ -172,13 +172,13 @@ export default function SubmitForm({ playerList, gameDates }: Props) {
     "BB",
     "HBP",
     "K",
-    "GO / FO",
+    "GO / FO / E",
     "SF",
   ];
 
   const resultRadio = (valueInput: any, field: any) => {
     const onBase = ["1B", "2B", "3B", "HR", "BB", "HBP"];
-    const outs = ["K", "GO / FO", "SF"];
+    const outs = ["K", "GO / FO / E", "SF"];
     return (
       <Button
         key={field.name + valueInput}
@@ -394,7 +394,7 @@ export default function SubmitForm({ playerList, gameDates }: Props) {
             )}
           />
           <div className="flex justify-end gap-4 text-xs md:text-sm text-slate-400 pt-4">
-            <div>GO / FO = Ground / Fly Out</div>
+            <div>GO / FO / E = Ground / Fly Out / Base on Error</div>
             <div>SF = Sacrifice Fly</div>
           </div>
           <FormField
