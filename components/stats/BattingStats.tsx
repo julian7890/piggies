@@ -70,7 +70,7 @@ async function getData(): Promise<Player[]> {
       walks: batResult("BB"),
       hitByPitch: batResult("HBP"),
       sacrificeFlies: batResult("SF"),
-      stolenBase: playResult("runs"),
+      stolenBase: playResult("SB"),
       strike: batResult("K"),
     };
     return finalStat;
