@@ -95,6 +95,6 @@ export const columns: ColumnDef<Player>[] = [
   {
     accessorKey: "WHIP",
     header: "WHIP",
-    accessorFn: (row) => ((row.walks + row.hits) / row.innings || 0).toFixed(2),
+    accessorFn: (row) => ((row.walks + row.hits) / (row.innings / 3) || 0).toFixed(2),
   },
 ];
