@@ -378,13 +378,13 @@ export default function SubmitForm({ playerList, gameDates }: Props) {
                         field.onChange(e);
                         setIsCalendarOpen(false);
                       }}
-                      /*disabled={(date) => {
+                      disabled={(date) => {
                         return (
                           date > new Date() ||
                           date < new Date("1900-01-01") ||
                           !gameDates.includes(format(date, "P"))
                         );
-                      }}*/
+                      }}
                       initialFocus
                     />
                   </PopoverContent>

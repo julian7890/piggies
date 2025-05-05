@@ -1,13 +1,19 @@
-import SubmitForm from "@/components/submit/submitForm";
+import Setting from "@/components/setting/Setting";
 import { db } from "@/drizzle/db";
 import { GameTable, PlayerTable } from "@/drizzle/schema";
 import { format } from "date-fns";
+import React from "react";
 
-export default async function SubmitPage() {
+export default async function SettingPage() {
   const playerList = await db.select().from(PlayerTable);
-  playerList.sort((a, b) => a.name.localeCompare(b.name));
   const gameDates = (
     await db.select({ gameDate: GameTable.gameDate }).from(GameTable)
   ).map((game) => format(game.gameDate as Date, "P"));
-  return <SubmitForm playerList={playerList} gameDates={gameDates} />;
+
+  playerList.sort((a, b) => a.name.localeCompare(b.name));
+  return (
+    <div>
+      <Setting playerList={playerList} gameDates={gameDates} />
+    </div>
+  );
 }

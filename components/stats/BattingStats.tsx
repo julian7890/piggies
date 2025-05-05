@@ -24,13 +24,17 @@ async function getData(): Promise<Player[]> {
       .where(eq(StatTable.playerId, player.id));
 
     const atBat = () => {
+      const adjustAtBat = ["BB", "HBP", "SF"];
       let count = 0;
       for (let stat of personalStat) {
-        stat["1st"] && count++;
-        stat["2nd"] && count++;
-        stat["3rd"] && count++;
-        stat["4th"] && count++;
-        stat["5th"] && count++;
+        if (stat.playerId == "88f30fcc-c2a4-4c56-bcea-3422b71f021a") {
+          console.log(stat);
+        }
+        stat["1st"] && !adjustAtBat.includes(stat["1st"] as string) && count++;
+        stat["2nd"] && !adjustAtBat.includes(stat["2nd"] as string) && count++;
+        stat["3rd"] && !adjustAtBat.includes(stat["3rd"] as string) && count++;
+        stat["4th"] && !adjustAtBat.includes(stat["4th"] as string) && count++;
+        stat["5th"] && !adjustAtBat.includes(stat["5th"] as string) && count++;
       }
       return count;
     };

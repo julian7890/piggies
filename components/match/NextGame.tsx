@@ -15,7 +15,6 @@ type Props = {
 
 export default function NextGame({ nextGame }: Props) {
   const nextDate = toZonedTime(nextGame?.gameDate as Date, "America/New_York");
-  console.log(nextDate)
   const valid = nextDate.toString() !== "Invalid Date";
   const dayOfWeek = valid ? format(nextDate as Date, "ccc") : "";
   const gameTime = valid ? format(nextDate as Date, "haaa") : "";

@@ -50,7 +50,7 @@ export const columns: ColumnDef<Player>[] = [
     header: "AVG",
     accessorFn: (row) =>
       (
-        (row.single + row.double + row.triple + row.homerun) / (row.atBat - row.hitByPitch - row.walks - row.sacrificeFlies) || 0
+        (row.single + row.double + row.triple + row.homerun) / row.atBat || 0
       ).toFixed(3),
     sortDescFirst: true,
   },

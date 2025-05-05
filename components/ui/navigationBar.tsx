@@ -75,6 +75,16 @@ export default function NavigationBar() {
       >
         <div>Submit Match</div>
       </Link>
+      {/* <Link
+        href={"/starting"}
+        className={`rounded-xl p-2 md:p-4 hover:bg-[#212E41]/60 ${
+          pathname == "/starting"
+            ? "bg-[#212E41] pointer-events-none select-none"
+            : "bg-[#212E41]/80"
+        }`}
+      >
+        <div>Starting</div>
+      </Link> */}
     </div>
   );
 }
