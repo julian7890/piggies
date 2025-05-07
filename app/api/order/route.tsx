@@ -20,13 +20,13 @@ export async function POST(request: any) {
 
   // const checkEntry = await db.select().from(GameTable);
 
-  const result = await db
+  /* const result = await db
     .update(GameTable)
     .set({
       order: [...((game[0].order as Array<string>) || [""]), player[0].id],
     })
     .where(eq(GameTable.id, game[0].id))
-    .returning({ order: GameTable.order });
+    .returning({ order: GameTable.order }); */
 
   // if (checkEntry.length) {
   //   const errorResponse = {
@@ -44,5 +44,5 @@ export async function POST(request: any) {
 
   // const result = await db.insert(StatTable).values(uploadData);
 
-  return NextResponse.json(result);
+  return NextResponse.json("result");
 }
