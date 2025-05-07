@@ -11,7 +11,7 @@ export async function POST(request: any) {
     .from(GameTable)
     .where(sql`CAST(${GameTable.gameDate} AS date) = ${uploadData}`);
 
-  const startingOrder:any = [];
+  const startingOrder: any = [];
 
   /* for (let playerId of (game[0].order as Array<string>) || [""]) {
     const player = await db
