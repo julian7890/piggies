@@ -13,14 +13,14 @@ export async function POST(request: any) {
 
   const startingOrder = [];
 
-  for (let playerId of (game[0].order as Array<string>) || [""]) {
+  /* for (let playerId of (game[0].order as Array<string>) || [""]) {
     const player = await db
       .selectDistinct()
       .from(PlayerTable)
       .where(eq(PlayerTable.id, playerId));
 
     startingOrder.push(player[0]);
-  }
+  } */
 
   return NextResponse.json(startingOrder);
 }
