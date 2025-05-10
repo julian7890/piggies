@@ -27,9 +27,6 @@ async function getData(): Promise<Player[]> {
       const adjustAtBat = ["BB", "HBP", "SF"];
       let count = 0;
       for (let stat of personalStat) {
-        if (stat.playerId == "88f30fcc-c2a4-4c56-bcea-3422b71f021a") {
-          console.log(stat);
-        }
         stat["1st"] && !adjustAtBat.includes(stat["1st"] as string) && count++;
         stat["2nd"] && !adjustAtBat.includes(stat["2nd"] as string) && count++;
         stat["3rd"] && !adjustAtBat.includes(stat["3rd"] as string) && count++;
