@@ -1,6 +1,6 @@
 import { db } from "@/drizzle/db";
 import { eq, sql } from "drizzle-orm";
-import { GameTable, PlayerTable } from "@/drizzle/schema";
+import { GameTable, OrderTable, PlayerTable } from "@/drizzle/schema";
 import { NextResponse } from "next/server";
 
 export async function POST(request: any) {
@@ -22,15 +22,15 @@ export async function POST(request: any) {
 
   // const checkEntry = await db.select().from(GameTable);
 
-  const result = await db
-    .update(GameTable)
-    .set({
-      order: sql.raw(
-        `JSON_ARRAY_APPEND(order, ${JSON.stringify(player)}, true)`
-      ),
-    })
-    .where(eq(GameTable.id, game[0].id))
-    .returning({ order: GameTable.order });
+  // const result = await db
+  //   .update(GameTable)
+  //   .set({
+  //     order: sql.raw(
+  //       `JSON_ARRAY_APPEND(order, ${JSON.stringify(player)}, true)`
+  //     ),
+  //   })
+  //   .where(eq(GameTable.id, game[0].id))
+  //   .returning({ order: GameTable.order });
 
   // if (checkEntry.length) {
   //   const errorResponse = {
@@ -46,7 +46,7 @@ export async function POST(request: any) {
   //   uploadData.gameId = game[0].id;
   //   uploadData.playerId = player[0].id;
 
-  // const result = await db.insert(StatTable).values(uploadData);
+  const result = await db.insert(OrderTable).values(uploadData);
 
   return NextResponse.json(result);
 }

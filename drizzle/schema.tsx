@@ -9,7 +9,6 @@ import {
   time,
   timestamp,
   boolean,
-
 } from "drizzle-orm/pg-core";
 
 export const PlayerTable = pgTable(
