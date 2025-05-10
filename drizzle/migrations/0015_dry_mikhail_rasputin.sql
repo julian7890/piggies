@@ -1,0 +1,1 @@
+ALTER TABLE "game" ALTER COLUMN "order" SET DEFAULT '[]'::json;

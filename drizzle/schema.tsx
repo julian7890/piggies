@@ -9,7 +9,7 @@ import {
   time,
   timestamp,
   boolean,
-  json,
+
 } from "drizzle-orm/pg-core";
 
 export const PlayerTable = pgTable(
@@ -56,6 +56,18 @@ export const StatTable = pgTable("stat", {
   pitcherRecord: varchar("pitcherRecord", { length: 255 }),
 });
 
+export const OrderTable = pgTable("order", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  gameId: uuid("gameId")
+    .references(() => GameTable.id)
+    .notNull(),
+  playerId: uuid("playerId")
+    .references(() => PlayerTable.id)
+    .notNull(),
+  position: varchar("position", { length: 255 }),
+  battingOrder: integer("batting"),
+});
+
 export const GameTable = pgTable("game", {
   id: uuid("id").primaryKey().defaultRandom(),
   gameDate: timestamp("gameDate", { mode: "date" }),
@@ -65,7 +77,6 @@ export const GameTable = pgTable("game", {
   selfResult: varchar("selfResult", { length: 255 }),
   opponentResult: varchar("opponentResult", { length: 255 }),
   homeTeam: boolean("homeTeam"),
-  order: json("order"),
 });
 
 export const GameStatTable = pgTable(
@@ -94,6 +105,16 @@ export const GameTableRelations = relations(GameTable, ({ many }) => {
   return {
     player: many(PlayerTable),
     stat: many(StatTable),
+  };
+});
+
+export const OrderTableRelations = relations(OrderTable, ({ many, one }) => {
+  return {
+    player: many(PlayerTable),
+    game: one(GameTable, {
+      fields: [OrderTable.gameId],
+      references: [GameTable.id],
+    }),
   };
 });
 

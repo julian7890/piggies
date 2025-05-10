@@ -14,6 +14,10 @@ export async function POST(request: any) {
   const startingOrder = [];
 
   for (let playerId of (game[0].order as Array<string>) || [""]) {
+    if (!playerId) {
+      break;
+    }
+
     const player = await db
       .selectDistinct()
       .from(PlayerTable)

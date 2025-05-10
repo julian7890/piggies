@@ -124,6 +124,7 @@ export default function SubmitForm({ playerList, gameDates }: Props) {
   }
 
   const getCurrentGame = async (date: Date | undefined) => {
+    console.log(date);
     const res = await fetch("/api/game", {
       method: "POST",
       body: JSON.stringify(date),
@@ -168,40 +169,6 @@ export default function SubmitForm({ playerList, gameDates }: Props) {
           onSubmit={form.handleSubmit(onSubmit)}
           className="flex flex-col gap-4"
         >
-          <FormField
-            control={form.control}
-            name="player"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="md:text-2xl">Player</FormLabel>
-                <FormControl>
-                  <DelayedSelect
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                    value={field.value}
-                    name={"player"}
-                    key={form.watch("player")}
-                  >
-                    <FormControl className="bg-primary text-primary-foreground hover:bg-primary/90 border-none">
-                      <SelectTrigger
-                        className={`md:text-xl ${
-                          !field.value && "text-muted-foreground"
-                        }`}
-                      >
-                        {field.value ? (
-                          <SelectValue placeholder="Select Player" />
-                        ) : (
-                          "Select Player"
-                        )}
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>{playerSelection()}</SelectContent>
-                  </DelayedSelect>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
           <FormField
             control={form.control}
             name="date"
@@ -251,6 +218,41 @@ export default function SubmitForm({ playerList, gameDates }: Props) {
               </FormItem>
             )}
           />
+          <FormField
+            control={form.control}
+            name="player"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="md:text-2xl">Player</FormLabel>
+                <FormControl>
+                  <DelayedSelect
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                    value={field.value}
+                    name={"player"}
+                    key={form.watch("player")}
+                  >
+                    <FormControl className="bg-primary text-primary-foreground hover:bg-primary/90 border-none">
+                      <SelectTrigger
+                        className={`md:text-xl ${
+                          !field.value && "text-muted-foreground"
+                        }`}
+                      >
+                        {field.value ? (
+                          <SelectValue placeholder="Select Player" />
+                        ) : (
+                          "Select Player"
+                        )}
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>{playerSelection()}</SelectContent>
+                  </DelayedSelect>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
           <FormField
             control={form.control}
             name="position"

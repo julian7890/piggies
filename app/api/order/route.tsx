@@ -13,6 +13,8 @@ export async function POST(request: any) {
     .from(GameTable)
     .where(sql`CAST(${GameTable.gameDate} AS date) = ${uploadData.date}`);
 
+  console.log(game);
+
   const player = await db
     .select()
     .from(PlayerTable)
@@ -23,7 +25,9 @@ export async function POST(request: any) {
   const result = await db
     .update(GameTable)
     .set({
-      order: [...((game[0].order as Array<string>) || [""]), player[0].id],
+      order: sql.raw(
+        `JSON_ARRAY_APPEND(order, ${JSON.stringify(player)}, true)`
+      ),
     })
     .where(eq(GameTable.id, game[0].id))
     .returning({ order: GameTable.order });
