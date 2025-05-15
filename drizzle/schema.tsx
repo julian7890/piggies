@@ -64,7 +64,7 @@ export const OrderTable = pgTable("order", {
     .references(() => PlayerTable.id)
     .notNull(),
   position: varchar("position", { length: 255 }),
-  battingOrder: integer("batting"),
+  battingOrder: integer("batting").generatedAlwaysAsIdentity({ startWith: 1 }),
 });
 
 export const GameTable = pgTable("game", {

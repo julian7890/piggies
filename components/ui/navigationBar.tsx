@@ -75,7 +75,7 @@ export default function NavigationBar() {
       >
         <div>Submit Match</div>
       </Link>
-      {/* <Link
+      <Link
         href={"/starting"}
         className={`rounded-xl p-2 md:p-4 hover:bg-[#212E41]/60 ${
           pathname == "/starting"
@@ -84,7 +84,7 @@ export default function NavigationBar() {
         }`}
       >
         <div>Starting</div>
-      </Link> */}
+      </Link>
     </div>
   );
 }

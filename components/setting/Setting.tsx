@@ -112,7 +112,7 @@ export default function SubmitForm({ playerList, gameDates }: Props) {
             <pre className="mt-2 rounded-md bg-slate-950 p-4">
               <div className="text-white">
                 <div>Submission Success!</div>
-                <div>Thank you {values.player}!</div>
+                <div>{values.player} added to order!</div>
               </div>
             </pre>
           ),

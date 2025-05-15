@@ -13,8 +13,6 @@ export async function POST(request: any) {
     .from(GameTable)
     .where(sql`CAST(${GameTable.gameDate} AS date) = ${uploadData.date}`);
 
-  console.log(game);
-
   const player = await db
     .select()
     .from(PlayerTable)
@@ -43,8 +41,9 @@ export async function POST(request: any) {
 
   //   return NextResponse.json(errorResponse);
   // } else {
-  //   uploadData.gameId = game[0].id;
-  //   uploadData.playerId = player[0].id;
+  uploadData.gameId = game[0].id;
+  uploadData.playerId = player[0].id;
+  uploadData.batting = 1;
 
   const result = await db.insert(OrderTable).values(uploadData);
 
