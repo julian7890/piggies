@@ -1,1 +1,0 @@
-ALTER TABLE "stat" ALTER COLUMN "statsId" SET NOT NULL;

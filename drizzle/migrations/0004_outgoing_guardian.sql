@@ -1,1 +1,0 @@
-ALTER TABLE "game" ADD COLUMN "opponent" varchar(255);

@@ -2,7 +2,7 @@ import { relations } from "drizzle-orm";
 import {
   integer,
   pgTable,
-  primaryKey,
+  // primaryKey,
   unique,
   uuid,
   varchar,
@@ -64,7 +64,7 @@ export const OrderTable = pgTable("order", {
     .references(() => PlayerTable.id)
     .notNull(),
   position: varchar("position", { length: 255 }),
-  battingOrder: integer("batting").generatedAlwaysAsIdentity({ startWith: 1 }),
+  batting: integer("batting"),
 });
 
 export const GameTable = pgTable("game", {
@@ -78,18 +78,18 @@ export const GameTable = pgTable("game", {
   homeTeam: boolean("homeTeam"),
 });
 
-export const GameStatTable = pgTable(
-  "gameStat",
-  {
-    gameId: uuid("gameId").references(() => GameTable.id),
-    statId: uuid("statId").references(() => StatTable.id),
-  },
-  (table) => {
-    return {
-      pk: primaryKey({ columns: [table.gameId, table.statId] }),
-    };
-  }
-);
+// export const GameStatTable = pgTable(
+//   "gameStat",
+//   {
+//     gameId: uuid("gameId").references(() => GameTable.id),
+//     statId: uuid("statId").references(() => StatTable.id),
+//   },
+//   (table) => {
+//     return {
+//       pk: primaryKey({ columns: [table.gameId, table.statId] }),
+//     };
+//   }
+// );
 
 //RELATIONS
 
@@ -97,6 +97,7 @@ export const PlayerTableRelations = relations(PlayerTable, ({ many }) => {
   return {
     game: many(GameTable),
     stat: many(StatTable),
+    order: many(OrderTable),
   };
 });
 
@@ -109,7 +110,10 @@ export const GameTableRelations = relations(GameTable, ({ many }) => {
 
 export const OrderTableRelations = relations(OrderTable, ({ many, one }) => {
   return {
-    player: many(PlayerTable),
+    player: one(PlayerTable, {
+      fields: [OrderTable.playerId],
+      references: [PlayerTable.id],
+    }),
     game: one(GameTable, {
       fields: [OrderTable.gameId],
       references: [GameTable.id],

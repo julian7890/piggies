@@ -18,6 +18,13 @@ export async function POST(request: any) {
     .from(PlayerTable)
     .where(eq(PlayerTable.name, uploadData.player));
 
+  const order = await db
+    .select()
+    .from(OrderTable)
+    .where(eq(OrderTable.gameId, game[0].id));
+
+  console.log(order);
+
   // const checkEntry = await db.select().from(GameTable);
 
   // const result = await db
@@ -43,7 +50,7 @@ export async function POST(request: any) {
   // } else {
   uploadData.gameId = game[0].id;
   uploadData.playerId = player[0].id;
-  uploadData.batting = 1;
+  uploadData.batting = order.length + 1;
 
   const result = await db.insert(OrderTable).values(uploadData);
 

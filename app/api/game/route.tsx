@@ -1,6 +1,6 @@
 import { db } from "@/drizzle/db";
 import { eq, sql } from "drizzle-orm";
-import { GameTable, PlayerTable } from "@/drizzle/schema";
+import { GameTable, OrderTable } from "@/drizzle/schema";
 import { NextResponse } from "next/server";
 
 export async function POST(request: any) {
@@ -12,6 +12,13 @@ export async function POST(request: any) {
     .where(sql`CAST(${GameTable.gameDate} AS date) = ${uploadData}`);
 
   const startingOrder: any = [];
+
+  const order = await db.query.OrderTable.findMany({
+    where: eq(OrderTable.gameId, game[0].id),
+    with: {player: true}
+  });
+
+  console.log(order);
 
   // for (let playerId of (game[0].order as Array<string>) || [""]) {
   //   if (!playerId) {

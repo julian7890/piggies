@@ -13,7 +13,6 @@ import {
 
 import {
   DelayedSelect,
-  Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
@@ -35,7 +34,6 @@ import { useEffect, useState } from "react";
 
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { db } from "@/drizzle/db";
 
 const formSchema = z.object({
   player: z.string({
@@ -71,6 +69,7 @@ export default function SubmitForm({ playerList, gameDates }: Props) {
   const [game, setGame] = useState([]);
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    console.log("test");
     try {
       const res = await fetch("/api/order", {
         method: "POST",
@@ -124,7 +123,7 @@ export default function SubmitForm({ playerList, gameDates }: Props) {
   }
 
   const getCurrentGame = async (date: Date | undefined) => {
-    console.log(date);
+    if (!date) return;
     const res = await fetch("/api/game", {
       method: "POST",
       body: JSON.stringify(date),
@@ -252,7 +251,6 @@ export default function SubmitForm({ playerList, gameDates }: Props) {
               </FormItem>
             )}
           />
-
           <FormField
             control={form.control}
             name="position"

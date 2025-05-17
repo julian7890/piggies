@@ -1,1 +1,0 @@
-ALTER TABLE "game" ALTER COLUMN "order" SET DATA TYPE json;
