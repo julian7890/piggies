@@ -32,7 +32,7 @@ export default function Recent({ previousGame }: any) {
   const previousGameDate = format(previousGame.gameDate, "P");
   const formatScore = (scoreData: string) => {
     const arr: (number | null)[] = scoreData?.split("").map((n) => +n);
-    while(arr.length < 7) {
+    while(arr?.length < 7) {
       arr.push(null);
     }
     return arr;
