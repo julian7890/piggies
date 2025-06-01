@@ -303,15 +303,26 @@ export default function SubmitForm({ playerList, gameDates }: Props) {
         </form>
       </Form>
       <div className="px-4">
-        Batting Order
-        {game.map((player: { id: string; name: string }, index) => {
-          return (
-            <div key={player.id} className="flex gap-2">
-              <div>{index + 1}</div>
-              <div>{player.name}</div>
-            </div>
-          );
-        })}
+        Starting Lineup
+        <div className="grid grid-cols-3 text-center">
+          {game.map(
+            (player: {
+              playerId: string;
+              name: string;
+              batting: number;
+              position: string;
+              number: number;
+            }) => {
+              return (
+                <div key={player.playerId} className="contents">
+                  <div>{player.batting}</div>
+                  <div>{player.name + " #" + player.number}</div>
+                  <div>{player.position}</div>
+                </div>
+              );
+            }
+          )}
+        </div>
       </div>
     </div>
   );

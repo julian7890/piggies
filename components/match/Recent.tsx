@@ -4,14 +4,13 @@ import {
   TableCaption,
   TableCell,
   TableHead,
-  TableHeader,
   TableRow,
 } from "@/components/ui/table";
 
 import { format } from "date-fns";
 
 const scoreTable = (scoreData: (number | null)[], home: boolean) => {
-  const lastInputIndex = scoreData.findIndex((input) => input == null) - 1;
+  const lastInputIndex = scoreData?.findIndex((input) => input == null) - 1;
   if (scoreData) {
     return scoreData.map((score, index) => (
       <TableCell key={index} className="text-center">
