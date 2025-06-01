@@ -10,10 +10,17 @@ import {
 
 import { format } from "date-fns";
 
-const scoreTable = (scoreData: (number | null)[]) => {
+const scoreTable = (scoreData: (number | null)[], home: boolean) => {
+  const lastInputIndex = scoreData.findIndex((input) => input == null) - 1;
   if (scoreData) {
     return scoreData.map((score, index) => (
-      <TableCell key={index}>{score == null ? "x" : score}</TableCell>
+      <TableCell key={index} className="text-center">
+        {home && index == lastInputIndex && score !== 0
+          ? score + "x"
+          : score == null
+          ? "x"
+          : score}
+      </TableCell>
     ));
   }
 };
@@ -30,9 +37,10 @@ const runsCalc = (scoreData: (number | null)[]) => {
 
 export default function Recent({ previousGame }: any) {
   const previousGameDate = format(previousGame.gameDate, "P");
+
   const formatScore = (scoreData: string) => {
     const arr: (number | null)[] = scoreData?.split("").map((n) => +n);
-    while(arr?.length < 7) {
+    while (arr?.length < 7) {
       arr.push(null);
     }
     return arr;
@@ -74,7 +82,7 @@ export default function Recent({ previousGame }: any) {
             </TableRow>
             <TableRow>
               <TableCell>{data.visitor.name}</TableCell>
-              {scoreTable(data.visitor.scoreData)}
+              {scoreTable(data.visitor.scoreData, false)}
               <TableCell
                 className={`${
                   visitorTotal > homeTotal ? "font-bold" : ""
@@ -85,7 +93,7 @@ export default function Recent({ previousGame }: any) {
             </TableRow>
             <TableRow>
               <TableCell>{data.home.name}</TableCell>
-              {scoreTable(data.home.scoreData)}
+              {scoreTable(data.home.scoreData, true)}
               <TableCell
                 className={`${
                   homeTotal > visitorTotal ? "font-bold" : ""
